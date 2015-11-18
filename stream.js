@@ -88,16 +88,6 @@ page.open(opts.url, function (status) {
   }
 
 
-  page.evaluate(function () {
-    var bgColor = window
-      .getComputedStyle(document.body)
-      .getPropertyValue('background-color');
-
-    if (!bgColor || bgColor === 'rgba(0, 0, 0, 0)') {
-      document.body.style.backgroundColor = 'white';
-    }
-  });
-
   var screenshotSelected = function () {
     if (selectorsToScreen.length) {
       selectorsToScreen.forEach(function (selector) {
