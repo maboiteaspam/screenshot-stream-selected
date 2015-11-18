@@ -8,15 +8,14 @@ app.use(express.static(__dirname + '/public'));
 var server = app.listen(3000);
 
 sshot("http://localhost:3000/index.html", "1024*768", {})
-.on('data', function (b){
-    //console.log(b+'')
-  })
 .on('block', function (b){
+    console.log('got '+b.file)
     var d = path.dirname(b.file);
     if (fs.existsSync(d)===false) fs.mkdirSync(path.dirname(b.file))
     fs.writeFileSync(b.file, new Buffer(b.img, 'base64'))
-  })
-.on('end', function (b){
+  }).on('data', function (d){
+  /* !!! for some reasons, it is required to bind data to receive end event */
+  }).on('end', function (){
     console.log('end')
     server.close();
   })

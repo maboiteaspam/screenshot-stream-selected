@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+
+  <symbol id="arrow-bottom" viewBox ="0 0 24 8">
+    <g>
+      <path d="M24.24.96L12.586 12.17.93.957" stroke-miterlimit="10" stroke-width="2.69" ></path>
+    </g>
+  </symbol>
+
+
+  <symbol id="arrow-left" viewBox ="0 0 15 25">
+      <path d="M13.063 24.25L1.854 12.596 13.065.94" stroke-miterlimit="10" stroke-width="2.69"></path>
+  </symbol>
+
+</svg>

@@ -1,34 +1,96 @@
 <html>
 
-    <head>
-        <title>Demo for screenshot-stream-selected</title>
-    </head>
+<head>
+    <title>Demo for screenshot-stream-selected</title>
+</head>
 
-    <body>
+<body>
 
-        <div style="width: 40px; height: 50px; background-color: red"
-             data-shoot-file="dist/red-div.jpg">
-            A
-        </div>
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="arrow-bottom" viewBox ="0 0 26 13">
+        <g>
+            <path d="M24.24.96L12.586 12.17.93.957" stroke-miterlimit="10" stroke-width="2.69" ></path>
+        </g>
+    </symbol>
+    <symbol id="arrow-left" viewBox ="2 -2 13 26">
+        <path d="M13.063 24.25L1.854 12.596 13.065.94" stroke-miterlimit="10" stroke-width="2.69"></path>
+    </symbol>
+</svg>
 
-        <div style="position:absolute; top:150px; left:150px; width: 40px; height: 50px; background-color: red"
-             data-shoot-file="dist/red-div2.jpg">
-            B
-        </div>
 
-        <script src="css-selector-generator.min.js"></script>
-    <script>
-        // first, create instance of the object with default options
-        var cssPathGen = new CssSelectorGenerator();
-        var matches = document.querySelectorAll("div[data-shoot-file]");
-        for( var index=0; index < matches.length; index++ ) {
-            console.log("SCREENTHIS: " +
-                    JSON.stringify({
-                        file: matches[index].getAttribute('data-shoot-file'),
-                        selector: cssPathGen.getSelector(matches[index])
-                    })
-            )
-        }
-    </script>
-    </body>
+<div class="block" data-shoot-file="dist/arrow-bottom-black.jpg">
+    <div class="svg">
+        <svg class="icon arrow-bottom">
+            <use xlink:href="#arrow-bottom" />
+        </svg>
+    </div>
+</div>
+
+<div class="block" data-shoot-file="dist/arrow-bottom-blue.jpg">
+    <div class="svg">
+        <svg class="icon arrow-bottom s-bg-blue">
+            <use xlink:href="#arrow-bottom" />
+        </svg>
+    </div>
+</div>
+
+<div class="block" data-shoot-file="dist/arrow-bottom-stroke-black.jpg">
+    <div class="svg">
+        <svg class="icon arrow-bottom s-bg-no s-s-black">
+            <use xlink:href="#arrow-bottom" />
+        </svg>
+    </div>
+</div>
+
+<div class="block" data-shoot-file="dist/arrow-left-black.jpg">
+    <div class="svg">
+        <svg class="icon arrow-left">
+            <use xlink:href="#arrow-left" />
+        </svg>
+    </div>
+</div>
+
+<style type="text/css">
+    .block{
+        display: inline-block;
+        width: 2.5em;
+        height: 2.5em;
+        text-align: center;
+        background: transparent;
+    }
+    .svg{
+        width: 2em;
+        height: 2em;
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .icon{
+        width: 100%;
+        height: 100%;
+    }
+    .s-bg-no{
+        fill: transparent;
+    }
+    .s-bg-blue{
+        fill: blue;
+    }
+    .s-s-black{
+        stroke: black;
+    }
+</style>
+<script src="css-selector-generator.min.js"></script>
+<script>
+    // first, create instance of the object with default options
+    var cssPathGen = new CssSelectorGenerator();
+    var matches = document.querySelectorAll("div[data-shoot-file]");
+    for( var index=0; index < matches.length; index++ ) {
+        console.log("SCREENTHIS: " +
+                JSON.stringify({
+                    file: matches[index].getAttribute('data-shoot-file'),
+                    selector: cssPathGen.getSelector(matches[index])
+                })
+        )
+    }
+</script>
+</body>
 </html>
