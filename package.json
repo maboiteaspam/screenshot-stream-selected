@@ -1,0 +1,52 @@
+{
+  "name": "screenshot-stream",
+  "version": "2.1.1",
+  "description": "Capture screenshot of a website and return it as a stream",
+  "license": "MIT",
+  "repository": "kevva/screenshot-stream",
+  "author": {
+    "email": "kevinmartensson@gmail.com",
+    "name": "Kevin Mårtensson",
+    "url": "https://github.com/kevva"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "xo && ava"
+  },
+  "files": [
+    "index.js",
+    "stream.js"
+  ],
+  "keywords": [
+    "image",
+    "page",
+    "phantom",
+    "phantomjs",
+    "resolution",
+    "screen",
+    "screenshot",
+    "size",
+    "stream",
+    "url"
+  ],
+  "dependencies": {
+    "base64-stream": "^0.1.2",
+    "es5-shim": "^4.0.3",
+    "express": "^4.13.3",
+    "object-assign": "^2.1.1",
+    "parse-cookie-phantomjs": "^1.0.0",
+    "phantom-bridge": "^1.0.0"
+  },
+  "devDependencies": {
+    "ava": "^0.5.0",
+    "concat-stream": "^1.4.6",
+    "cookie": "^0.1.2",
+    "image-size": "^0.3.3",
+    "is-jpg": "^1.0.0",
+    "is-png": "^1.0.0",
+    "png-js": "^0.1.1",
+    "xo": "*"
+  }
+}

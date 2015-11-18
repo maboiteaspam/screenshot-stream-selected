@@ -1,0 +1,32 @@
+<html>
+
+    <head>
+        <title>Demo for screenshot-stream-selected</title>
+    </head>
+
+    <body>
+
+        <div style="width: 40px; height: 50px; background-color: red"
+             data-shoot-file="dist/red-div.jpg">
+        </div>
+
+        <div style="position:absolute; top:150px; left:150px; width: 40px; height: 50px; background-color: red"
+             data-shoot-file="dist/red-div2.jpg">
+        </div>
+
+        <script src="css-selector-generator.min.js"></script>
+    <script>
+        // first, create instance of the object with default options
+        var cssPathGen = new CssSelectorGenerator();
+        var matches = document.querySelectorAll("div[data-shoot-file]");
+        for( var index=0; index < matches.length; index++ ) {
+            console.log("SCREENTHIS: " +
+                    JSON.stringify({
+                        file: matches[index].getAttribute('data-shoot-file'),
+                        selector: cssPathGen.getSelector(matches[index])
+                    })
+            )
+        }
+    </script>
+    </body>
+</html>
