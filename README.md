@@ -15,7 +15,7 @@ They can be any valid HTML thing you want to do.
 Then, for each part, or block, of the page you d like to screen, simply add a new html attribute,
 
 ```html
- data-shoot-file="[file path to save the content]"
+ data-shoot-file="[file path to save the content, minus extension]"
 ```
 
 That's it. You can run the `bin` and get your pictures.
