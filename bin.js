@@ -1,11 +1,11 @@
 
 var argv = require('minimist')(process.argv.slice(2));
 
-if (argv.verbose) process.env['DEBUG'] = 'screenshot-sream'
+if (argv.verbose) process.env['DEBUG'] = 'screenshot-stream'
 
 var sshot = require('./index.js')
 var fs = require('fs');
-var debug = require('debug')('screenshot-sream');
+var debug = require('debug')('screenshot-stream');
 var path = require('path');
 var express = require('express');
 

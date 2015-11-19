@@ -1,6 +1,6 @@
 'use strict';
 var fs = require('fs');
-var debug = require('debug')('screenshot-sream');
+var debug = require('debug')('screenshot-stream');
 var path = require('path');
 var urlMod = require('url');
 var base64Stream = require('base64-stream');
