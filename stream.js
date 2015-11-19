@@ -120,7 +120,8 @@ page.open(opts.url, function (status) {
         }
         return sel.getBoundingClientRect();
       }, selector.selector);
-      selector.file = selector.file.replace(/(png|jpg|jpeg)$/, opts.format.toLowerCase())
+      selector.file = selector.file.replace(/([.]png|jpg|jpeg)$/, '')
+      selector.file += '.' + opts.format.toLowerCase()
       console.error("SAVETHIS:" + JSON.stringify({img: page.renderBase64(opts.format), file: selector.file}));
     })
     phantom.exit();
