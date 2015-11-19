@@ -103,11 +103,24 @@ page.open(opts.url, function (status) {
   var screenThemAll = function () {
     selectorsToScreen.forEach(function (selector) {
       page.clipRect = page.evaluate(function (el) {
-        return document
-          .querySelector(el)
-          .getBoundingClientRect();
+        if (!el) {
+          console.log("Unknown selector " + el);
+          console.log("Please report about it");
+          console.log("Please report about it");
+          console.log("Please report about it");
+          return {top:0,left:0,right:0,bottom:0};
+        }
+        var sel = document.querySelector(el);
+        if(!sel) {
+          console.log("Unknown selector " + el);
+          console.log("Please report about it");
+          console.log("Please report about it");
+          console.log("Please report about it");
+          return {top:0,left:0,right:0,bottom:0};
+        }
+        return sel.getBoundingClientRect();
       }, selector.selector);
-      console.error("SAVETHIS:" + JSON.stringify({img:page.renderBase64(opts.format), file: selector.file}));
+      console.error("SAVETHIS:" + JSON.stringify({img:'', file: selector.file}));
     })
     phantom.exit();
   };
