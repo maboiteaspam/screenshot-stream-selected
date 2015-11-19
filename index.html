@@ -37,7 +37,7 @@
 
 <p>Then, for each part, or block, of the page you d like to screen, simply add a new html attribute,</p>
 
-<div class="highlight highlight-text-html-basic"><pre> data-shoot-file="[file path to save the content]"</pre></div>
+<div class="highlight highlight-text-html-basic"><pre> data-shoot-file="[file path to save the content, minus extension]"</pre></div>
 
 <p>That's it. You can run the <code>bin</code> and get your pictures.</p>
 
@@ -50,16 +50,35 @@
 
 <p>I run it with</p>
 
-<div class="highlight highlight-source-shell"><pre>screenshot-stream-selected --path=/somewhere/playground/public --verbose</pre></div>
+<div class="highlight highlight-source-shell"><pre>screenshot-stream-selected --path=playground/public --verbose</pre></div>
 
 <p>It produces a png for each of those icons with sizes, color ect in <code>dist/</code>.</p>
 
 <h4>
 <a id="tips" class="anchor" href="#tips" aria-hidden="true"><span class="octicon octicon-link"></span></a>tips</h4>
 
-<p>To prepare your file the right way, i suggest you use <code>nws</code>, to quickly spawn a webserver then starts to edit your icons template.</p>
+<p>To prepare your file the right way,
+i suggest you use <code>nws</code>, to quickly spawn a webserver then starts to edit your icons template.</p>
 
 <p>see <a href="https://github.com/KenPowers/nws">nws</a></p>
+
+<h4>
+<a id="tips-1" class="anchor" href="#tips-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>tips</h4>
+
+<p>To debug your page under phantomjs, use <code>delay</code> option.</p>
+
+<p>start the program like this</p>
+
+<div class="highlight highlight-source-shell"><pre>screenshot-stream-selected --path=playground/public --delay 100</pre></div>
+
+<p>then open <code>http://localhost:3000/index.html</code> in your browser.</p>
+
+<h4>
+<a id="tips-2" class="anchor" href="#tips-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>tips</h4>
+
+<p>Do not use jpeg format to screen set of icons,
+it does <code>not</code> support <code>transparency</code>,
+thus it produces black images.</p>
 
 <h2>
 <a id="install" class="anchor" href="#install" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install</h2>
