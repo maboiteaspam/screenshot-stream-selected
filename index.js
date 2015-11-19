@@ -109,6 +109,8 @@ module.exports = function (url, size, opts) {
       stream.emit('error', err);
       return ;
     }
+  }).on('end', function () {
+    debug(opts)
   });
 
   return stream;
