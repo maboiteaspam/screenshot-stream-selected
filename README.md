@@ -57,6 +57,13 @@ screenshot-stream-selected --path=playground/public --delay 100
 then open `http://localhost:3000/index.html` in your browser.
 
 
+#### tips
+
+Do not use jpeg format to screen set of icons,
+it does `not` support `transparency`,
+thus it produces black images.
+
+
 ## Install
 
 ```sh
