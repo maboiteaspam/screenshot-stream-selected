@@ -40,36 +40,36 @@ screenshot-stream-selected --path=playground/public --verbose
 ## Command line options
 
 ```sh
-    screenshot-stream-selected [options]
+screenshot-stream-selected [options]
 
-    options
+options
 
-        path                Directory path to your local www root
-                                /some/path/
-        url                 The url to screen
-                                http://localhost:3000/index.hml
-        size                The size of the screen before the screenshots starts
-                                (1024x768)
-        delay               Number of seconds to wait before the screen is started.
-                                .5
-        scale               An integer to scale the resulting screenshot
-                                1
-        es5shim             A shim for es5
-                                see [es5-shim](https://github.com/es-shims/es5-shim)
-        format              A picture file format (png|jpeg)
-                                jpg
-                                see http://phantomjs.org/api/webpage/method/render-base64.html
-        output              A directory path where the pictures are recorded
-                                cwd + /dist
-        cookies             A JSONed array of cookies
-                                see [the code](https://github.com/kevva/screenshot-stream/blob/master/stream.js#L29)
-        script              A script to interface with this pahantomjs API to screen your blocks.
-                                see [the code](https://github.com/maboiteaspam/screenshot-stream-selected/blob/master/public/screenshot.js)
-        selectorHelper      A script helper to generate css selector path. It s tightly linked to script.
-                                see [css-selector-generator](https://github.com/fczbkk/css-selector-generator/)
-        userAgent           A value to forge the user agent request header.
-        username            A value to send to validate http authentication.
-        password            A value to send to validate http authentication.
+    path                Directory path to your local www root
+                            /some/path/
+    url                 The url to screen
+                            http://localhost:3000/index.hml
+    size                The size of the screen before the screenshots starts
+                            (1024x768)
+    delay               Number of seconds to wait before the screen is started.
+                            .5
+    scale               An integer to scale the resulting screenshot
+                            1
+    es5shim             A shim for es5
+                            see [es5-shim](https://github.com/es-shims/es5-shim)
+    format              A picture file format (png|jpeg)
+                            jpg
+                            see http://phantomjs.org/api/webpage/method/render-base64.html
+    output              A directory path where the pictures are recorded
+                            cwd + /dist
+    cookies             A JSONed array of cookies
+                            see [the code](/blob/master/stream.js#L32)
+    script              A script to interface with this pahantomjs API to screen your blocks.
+                            see [the code](/blob/master/public/screenshot.js)
+    selectorHelper      A script helper to generate css selector path. It s tightly linked to script.
+                            see [css-selector-generator](https://github.com/fczbkk/css-selector-generator/)
+    userAgent           A value to forge the user agent request header.
+    username            A value to send to validate http authentication.
+    password            A value to send to validate http authentication.
 ```
 
 ## Credits
