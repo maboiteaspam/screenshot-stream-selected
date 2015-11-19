@@ -29,6 +29,7 @@ opts.script   = argv.script || path.join(__dirname, 'public', 'screenshot.js');
 opts.selectorHelper = argv.selectorHelper || path.join(__dirname, 'public', 'css-selector-generator.min.js');
 
 
+if (fs.existsSync(opts.path)===false) return console.error('public ww root path does not exists\nplease check this is a correct path ' + opts.path);
 if (fs.existsSync(opts.output)===false) fs.mkdirSync(opts.output)
 
 
@@ -66,8 +67,11 @@ sshot(opts.url, opts.size, opts)
   }).on('error', function (d){
     console.error('Got error !!')
     console.error(d)
-    server.close();
   }).on('end', function (){
     console.log('All done !!')
     server.close();
   })
+
+process.on('SIGINT', function () {
+  server.close();
+})
