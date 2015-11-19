@@ -8,6 +8,7 @@ var es5Shim = require.resolve('es5-shim');
 var parseCookiePhantomjs = require('parse-cookie-phantomjs');
 var phantomBridge = require('phantom-bridge');
 var objectAssign = require('object-assign');
+var byline = require('byline');
 var es5shim;
 
 function handleCookies(cookies, url) {
@@ -64,13 +65,13 @@ module.exports = function (url, size, opts) {
 
 
   cp.stdout.setEncoding('utf8');
-  cp.stdout.on('data', function (data) {
+  byline(cp.stdout).on('data', function (data) {
     data = data.trim();
     stream.emit('data', data);
   });
 
   cp.stderr.setEncoding('utf8');
-  cp.stderr.on('data', function (data) {
+  byline(cp.stderr).on('data', function (data) {
     data = data.trim();
 
     if (/ phantomjs\[/.test(data)) {
