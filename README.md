@@ -38,7 +38,7 @@ It produces a png for each of those icons with sizes, color ect in `dist/`.
 
 #### tips
 
-To prepare your file the right way, i suggest you use `nws`, to quickly start a webserver then starts to edit your icons template.
+To prepare your file the right way, i suggest you use `nws`, to quickly spawn a webserver then starts to edit your icons template.
 
 see [nws](https://github.com/KenPowers/nws)
 
