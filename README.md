@@ -23,7 +23,7 @@ That's it. You can run the `bin` and get your pictures.
 
 #### demo
 
-See [my icon template](/blob/master/playground/public/index.html)
+See [my icon template](/playground/public/index.html)
 
 I run it with
 
