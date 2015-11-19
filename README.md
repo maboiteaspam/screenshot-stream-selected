@@ -4,7 +4,7 @@ Capture screenshot of a selected elements within a page website and return them 
 
 A variation of [screenshot-stream](https://github.com/kevva/screenshot-stream)
 
-I do that because i could not find a decent module to produce `svg to png` they way i need.
+I do that because i could not find a decent module to produce `svg to png` the way i need.
 
 ## Get started
 
