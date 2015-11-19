@@ -14,6 +14,7 @@ var screenshot = {
     var cssPathGen = new CssSelectorGenerator();
     var matches = document.querySelectorAll("div[data-shoot-file]");
     for( var index=0; index < matches.length; index++ ) {
+      matches[index].setAttribute('id', 'shoot-'+index)
       console.error("SCREENTHIS: " +
         JSON.stringify({
           file: matches[index].getAttribute('data-shoot-file'),
