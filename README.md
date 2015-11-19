@@ -20,6 +20,19 @@ Then, for each part, or block, of the page you d like to screen, simply add a ne
 
 That's it. You can run the `bin` and get your pictures.
 
+
+#### demo
+
+See [my icon template](/blob/master/playground/public/index.html)
+
+I run it with
+
+```sh
+screenshot-stream-selected --path=/somewhere/playground/public --verbose
+```
+
+It produces a png for each of those icons with sizes, color ect in `dist/`.
+
 ## Install
 
 ```sh
