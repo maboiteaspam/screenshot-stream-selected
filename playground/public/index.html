@@ -18,7 +18,7 @@
 </svg>
 
 
-<div class="block" data-shoot-file="dist/arrow-bottom-black.jpg">
+<div class="block" data-shoot-file="arrow-bottom-black.jpg">
     <div class="svg">
         <svg class="icon arrow-bottom">
             <use xlink:href="#arrow-bottom" />
@@ -26,7 +26,7 @@
     </div>
 </div>
 
-<div class="block" data-shoot-file="dist/arrow-bottom-blue.jpg">
+<div class="block" data-shoot-file="arrow-bottom-blue.jpg">
     <div class="svg">
         <svg class="icon arrow-bottom s-bg-blue">
             <use xlink:href="#arrow-bottom" />
@@ -34,7 +34,7 @@
     </div>
 </div>
 
-<div class="block" data-shoot-file="dist/arrow-bottom-stroke-black.jpg">
+<div class="block" data-shoot-file="arrow-bottom-stroke-black.jpg">
     <div class="svg">
         <svg class="icon arrow-bottom s-bg-no s-s-black">
             <use xlink:href="#arrow-bottom" />
@@ -42,7 +42,7 @@
     </div>
 </div>
 
-<div class="block" data-shoot-file="dist/arrow-left-black.jpg">
+<div class="block" data-shoot-file="arrow-left-black.jpg">
     <div class="svg">
         <svg class="icon arrow-left">
             <use xlink:href="#arrow-left" />
@@ -78,19 +78,5 @@
         stroke: black;
     }
 </style>
-<script src="css-selector-generator.min.js"></script>
-<script>
-    // first, create instance of the object with default options
-    var cssPathGen = new CssSelectorGenerator();
-    var matches = document.querySelectorAll("div[data-shoot-file]");
-    for( var index=0; index < matches.length; index++ ) {
-        console.log("SCREENTHIS: " +
-                JSON.stringify({
-                    file: matches[index].getAttribute('data-shoot-file'),
-                    selector: cssPathGen.getSelector(matches[index])
-                })
-        )
-    }
-</script>
 </body>
 </html>

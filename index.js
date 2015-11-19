@@ -1,5 +1,6 @@
 'use strict';
 var fs = require('fs');
+var debug = require('debug')('screenshot-sream');
 var path = require('path');
 var urlMod = require('url');
 var base64Stream = require('base64-stream');
@@ -33,12 +34,12 @@ module.exports = function (url, size, opts) {
     scale: 1
   }, opts);
 
-  opts.url = url;
-  opts.width = size.split(/x/i)[0] * opts.scale;
-  opts.height = size.split(/x/i)[1] * opts.scale;
-  opts.es5shim = opts.es5shim !== false ? path.relative(path.join(__dirname, 'lib'), es5Shim) : null;
-  opts.format = opts.format ? opts.format : 'png';
-  opts.cookies = handleCookies(opts.cookies, opts.url);
+  opts.url      = url;
+  opts.width    = size.split(/x/i)[0] * opts.scale;
+  opts.height   = size.split(/x/i)[1] * opts.scale;
+  opts.es5shim  = opts.es5shim !== false ? path.relative(path.join(__dirname, 'lib'), es5Shim) : null;
+  opts.format   = opts.format ? opts.format : 'png';
+  opts.cookies  = handleCookies(opts.cookies, opts.url);
 
   if (opts.format === 'jpg') {
     opts.format = 'jpeg';
@@ -47,6 +48,8 @@ module.exports = function (url, size, opts) {
   if (opts.es5shim) {
     es5shim = fs.readFileSync(es5Shim, 'utf8');
   }
+
+  debug(opts)
 
   var cp = phantomBridge(path.join(__dirname, 'stream.js'), [
     '--ignore-ssl-errors=true',
@@ -58,6 +61,13 @@ module.exports = function (url, size, opts) {
   var stream = cp.stdout.pipe(base64Stream.decode());
 
   process.stderr.setMaxListeners(0);
+
+
+  cp.stdout.setEncoding('utf8');
+  cp.stdout.on('data', function (data) {
+    data = data.trim();
+    stream.emit('data', data);
+  });
 
   cp.stderr.setEncoding('utf8');
   cp.stderr.on('data', function (data) {
@@ -75,13 +85,20 @@ module.exports = function (url, size, opts) {
       return;
     }
 
-    if (/^WARN: /.test(data)) {
-      stream.emit('warn', data.replace(/^WARN: /, ''));
+    if (/^SAVETHIS:/.test(data)) {
+      debug('got block ' + data)
+      stream.emit('block', JSON.parse(data.replace(/^SAVETHIS:/, '')));
       return;
     }
 
-    if (/^SAVETHIS:/.test(data)) {
-      stream.emit('block', JSON.parse(data.replace(/^SAVETHIS:/, '')));
+    if (/^TOKEN: /.test(data)) {
+      debug('got token ' + data)
+      stream.emit('token', data.replace(/^TOKEN: /, ''));
+      return;
+    }
+
+    if (/^WARN: /.test(data)) {
+      stream.emit('warn', data.replace(/^WARN: /, ''));
       return;
     }
 
@@ -89,6 +106,7 @@ module.exports = function (url, size, opts) {
       var err = new Error(data);
       err.noStack = true;
       stream.emit('error', err);
+      return ;
     }
   });
 
