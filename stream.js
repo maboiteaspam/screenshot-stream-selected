@@ -37,14 +37,13 @@ opts.cookies.forEach(function (cookie) {
 });
 
 // Tokens to indicate and detect the end of user script execution
-var userScriptDone = false;
-var userScriptEndToken = 'shoot-token-' + (new Date().getTime());
+var userScriptIsReady = false;
+var userScriptReadyToken = 'shoot-token-' + (new Date().getTime());
 
 // an array of css selectors to screenshot
 var selectorsToScreen = [];
 
 phantom.onError = function (err, trace) {
-  // enforce end of user script to prevent dead process
   console.error([
     'PHANTOM ERROR: ' + err,
     formatTrace(trace[0]?trace[0]:trace)
@@ -69,9 +68,10 @@ page.onConsoleMessage = function (msg) {
         msg.replace(/^SCREENTHIS:/, '')
       )
     )
+// to catch ready event
   }else if (msg.match(/^TOKEN:\s*/)
-    && userScriptEndToken===msg.replace(/^TOKEN:\s*/, '')) {
-    userScriptDone = true;
+    && userScriptReadyToken===msg.replace(/^TOKEN:\s*/, '')) {
+    userScriptIsReady = true;
     console.error(msg);
   } else {
     console.log(msg);
@@ -115,7 +115,7 @@ page.open(opts.url, function (status) {
   // Insert end token into the page context
   page.evaluate(function (token) {
     window.endToken = token;
-  }, userScriptEndToken);
+  }, userScriptReadyToken);
 
   // Update page render with help of the user script.
   page.includeJs(opts.selectorHelper);
@@ -124,14 +124,14 @@ page.open(opts.url, function (status) {
   // A timeout to prevent dead process ect
   opts.timeout = opts.timeout || 30;
   var executeScriptTimeout = setTimeout(function () {
-    userScriptDone = true;
+    userScriptIsReady = true;
   }, opts.timeout * 1000);
 
   // By now,
   // wait for SAVETHIS: message and collect them
   // wait for TOKEN: message and trigger the screenshots
   setInterval(function () {
-    if (userScriptDone) {
+    if (userScriptIsReady) {
       clearTimeout(executeScriptTimeout);
       setTimeout(screenThemAll, opts.delay * 1000);
     }
