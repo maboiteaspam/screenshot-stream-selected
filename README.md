@@ -23,7 +23,9 @@ That's it. You can run the `bin` and get your pictures.
 
 #### demo
 
-See [my icon template](/playground/public/index.html)
+See [my icons template](/playground/public/index.html).
+
+As you ll see, i have a bunch *** of icons to produce, so i used some `jquery` run in the browser to give me some help.
 
 I run it with
 
@@ -32,6 +34,13 @@ screenshot-stream-selected --path=/somewhere/playground/public --verbose
 ```
 
 It produces a png for each of those icons with sizes, color ect in `dist/`.
+
+
+#### tips
+
+To prepare your file the right way, i suggest you use `nws`, to quickly start a webserver then starts to edit your icons template.
+
+see [nws](https://github.com/KenPowers/nws)
 
 ## Install
 
