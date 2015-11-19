@@ -4,12 +4,10 @@ var debug = require('debug')('screenshot-stream');
 var path = require('path');
 var urlMod = require('url');
 var base64Stream = require('base64-stream');
-var es5Shim = require.resolve('es5-shim');
 var parseCookiePhantomjs = require('parse-cookie-phantomjs');
 var phantomBridge = require('phantom-bridge');
 var objectAssign = require('object-assign');
 var byline = require('byline');
-var es5shim;
 
 function handleCookies(cookies, url) {
   var parsedUrl = urlMod.parse(url);
@@ -38,21 +36,13 @@ module.exports = function (url, size, opts) {
   opts.url      = url;
   opts.width    = size.split(/x/i)[0] * opts.scale;
   opts.height   = size.split(/x/i)[1] * opts.scale;
-  opts.es5shim  = opts.es5shim !== false ? path.relative(path.join(__dirname, 'lib'), es5Shim) : null;
-  opts.format   = opts.format ? opts.format : 'png';
   opts.cookies  = handleCookies(opts.cookies, opts.url);
-
-  if (opts.format === 'jpg') {
-    opts.format = 'jpeg';
-  }
-
-  if (opts.es5shim) {
-    es5shim = fs.readFileSync(es5Shim, 'utf8');
-  }
+  opts.token    = 'speaker-token-' + (new Date().getTime());
+  opts.main     = path.join(__dirname, 'screen.js');
 
   debug(opts)
 
-  var cp = phantomBridge(path.join(__dirname, 'stream.js'), [
+  var cp = phantomBridge(opts.main, [
     '--ignore-ssl-errors=true',
     '--local-to-remote-url-access=true',
     '--ssl-protocol=any',
@@ -74,41 +64,12 @@ module.exports = function (url, size, opts) {
   byline(cp.stderr).on('data', function (data) {
     data = data.trim();
 
-    if (/ phantomjs\[/.test(data)) {
-      return;
+    if(data.substr(0, opts.token.length)===opts.token) {
+      var msg = data.substr(opts.token.length)
+      msg = msg.split(':')
+      stream.emit(msg.shift().toLowerCase(), msg.join(':'));
     }
 
-    if (/http:\/\/requirejs.org\/docs\/errors.html#mismatch/.test(data)) {
-      return;
-    }
-
-    if (es5shim && es5shim.indexOf(data) !== -1) {
-      return;
-    }
-
-    if (/^SAVETHIS:/.test(data)) {
-      debug('got block ' + data)
-      stream.emit('block', JSON.parse(data.replace(/^SAVETHIS:/, '')));
-      return;
-    }
-
-    if (/^TOKEN: /.test(data)) {
-      debug('got token ' + data)
-      stream.emit('token', data.replace(/^TOKEN: /, ''));
-      return;
-    }
-
-    if (/^WARN: /.test(data)) {
-      stream.emit('warn', data.replace(/^WARN: /, ''));
-      return;
-    }
-
-    if (data.length) {
-      var err = new Error(data);
-      err.noStack = true;
-      stream.emit('error', err);
-      return ;
-    }
   }).on('end', function () {
     debug(opts)
   });

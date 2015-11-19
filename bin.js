@@ -4,11 +4,11 @@ var argv = require('minimist')(process.argv.slice(2));
 
 if (argv.verbose) process.env['DEBUG'] = 'screenshot-stream'
 
-var sshot = require('./index.js')
 var fs = require('fs');
 var debug = require('debug')('screenshot-stream');
 var path = require('path');
 var express = require('express');
+var phantomStream = require('./phantom-stream');
 
 
 var opts = {};
@@ -28,6 +28,9 @@ opts.cookies  = 'cookies' in argv ? JSON.parse(argv.cookies) : [];
 opts.script   = argv.script || path.join(__dirname, 'public', 'screenshot.js');
 opts.selectorHelper = argv.selectorHelper || path.join(__dirname, 'public', 'css-selector-generator.min.js');
 
+if (opts.format === 'jpg') {
+  opts.format = 'jpeg';
+}
 
 if (fs.existsSync(opts.path)===false) return console.error('public ww root path does not exists\nplease check this is a correct path ' + opts.path);
 if (fs.existsSync(opts.output)===false) fs.mkdirSync(opts.output)
@@ -46,13 +49,18 @@ var server = app.listen(3000);
 if(!opts.script.match(/http:/)) opts.script = "/" + path.basename(opts.script);
 if(!opts.selectorHelper.match(/http:/)) opts.selectorHelper = "/" + path.basename(opts.selectorHelper);
 
-sshot(opts.url, opts.size, opts)
-  .on('block', function (b){
+phantomStream(opts.url, opts.size, opts)
+  .on('savethis', function (b){
+    b = JSON.parse(b)
     debug('got '+b.file+' picture length (b64) '+ b.img.length)
     var file = path.join(opts.output, b.file);
     var d = path.dirname(file);
     if (fs.existsSync(d)===false) fs.mkdirSync(d)
     fs.writeFileSync(file, new Buffer(b.img, 'base64'))
+  }).on('screenthis', function (d){
+    debug('screenthis : '+d)
+  }).on('token', function (d){
+    debug('token : '+d)
   }).on('data', function (d){
     /* !!! for some reasons, it is required to bind data to receive end event */
     console.log('PAGE IS TALKING : '+d)

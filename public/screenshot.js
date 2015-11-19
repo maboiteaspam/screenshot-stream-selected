@@ -14,18 +14,19 @@ var screenshot = {
     var cssPathGen = new CssSelectorGenerator();
     var matches = document.querySelectorAll("div[data-shoot-file]");
     for( var index=0; index < matches.length; index++ ) {
+
       matches[index].setAttribute('id', 'shoot-'+index)
-      console.error("SCREENTHIS: " +
-        JSON.stringify({
-          file: matches[index].getAttribute('data-shoot-file'),
-          selector: cssPathGen.getSelector(matches[index])
-        })
-      )
+
+      window.phantomSpeaker.emit('SCREENTHIS', {
+        file: matches[index].getAttribute('data-shoot-file'),
+        selector: cssPathGen.getSelector(matches[index])
+      });
     }
   },
   allDone: function () {
+
     screenshot.screenThemAll();
-    console.error("TOKEN: " +window.endToken)
+    window.phantomSpeaker.emit('TOKEN', window.endToken);
   }
 };
 
