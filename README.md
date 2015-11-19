@@ -30,7 +30,7 @@ As you ll see, i have a bunch *** of icons to produce, so i used some `jquery` r
 I run it with
 
 ```sh
-screenshot-stream-selected --path=/somewhere/playground/public --verbose
+screenshot-stream-selected --path=playground/public --verbose
 ```
 
 It produces a png for each of those icons with sizes, color ect in `dist/`.
@@ -38,9 +38,24 @@ It produces a png for each of those icons with sizes, color ect in `dist/`.
 
 #### tips
 
-To prepare your file the right way, i suggest you use `nws`, to quickly spawn a webserver then starts to edit your icons template.
+To prepare your file the right way,
+i suggest you use `nws`, to quickly spawn a webserver then starts to edit your icons template.
 
 see [nws](https://github.com/KenPowers/nws)
+
+
+#### tips
+
+To debug your page under phantomjs, use `delay` option.
+
+start the program like this
+
+```sh
+screenshot-stream-selected --path=playground/public --delay 100
+```
+
+then open `http://localhost:3000/index.html` in your browser.
+
 
 ## Install
 
