@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Screenshot-stream-selected by maboiteaspam</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Screenshot-stream-selected</h1>
+      <h2 class="project-tagline"></h2>
+      <a href="https://github.com/maboiteaspam/screenshot-stream-selected" class="btn">View on GitHub</a>
+      <a href="https://github.com/maboiteaspam/screenshot-stream-selected/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/maboiteaspam/screenshot-stream-selected/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="screenshot-stream-selected" class="anchor" href="#screenshot-stream-selected" aria-hidden="true"><span class="octicon octicon-link"></span></a>screenshot-stream-selected</h1>
+
+<p>Capture screenshot of a selected elements within a page website and return them using a stream.</p>
+
+<p>A variation of <a href="https://github.com/kevva/screenshot-stream">screenshot-stream</a></p>
+
+<p>I do that because i could not find a decent module to produce <code>svg to png</code> the way i need.</p>
+
+<h2>
+<a id="get-started" class="anchor" href="#get-started" aria-hidden="true"><span class="octicon octicon-link"></span></a>Get started</h2>
+
+<p>To get started you need to produce an HTML file and prepare the elements you d like to screen.</p>
+
+<p>They can be any valid HTML thing you want to do.</p>
+
+<p>Then, for each part, or block, of the page you d like to screen, simply add a new html attribute,</p>
+
+<div class="highlight highlight-text-html-basic"><pre> data-shoot-file="[file path to save the content]"</pre></div>
+
+<p>That's it. You can run the <code>bin</code> and get your pictures.</p>
+
+<h2>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install</h2>
+
+<div class="highlight highlight-source-shell"><pre>    npm i maboiteaspam/screenshot-stream-selected -g</pre></div>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p><code>screenshot-stream-selected</code> is a node binary to install globally on your computer.</p>
+
+<p>You can then run it like this,</p>
+
+<div class="highlight highlight-source-shell"><pre>screenshot-stream-selected --path=playground/public
+screenshot-stream-selected --path=playground/public --verbose</pre></div>
+
+<h2>
+<a id="command-line-options" class="anchor" href="#command-line-options" aria-hidden="true"><span class="octicon octicon-link"></span></a>Command line options</h2>
+
+<div class="highlight highlight-source-shell"><pre>screenshot-stream-selected [options]
+
+options
+
+    path                Directory path to your <span class="pl-k">local</span> www root
+                            /some/path/
+    url                 The url to screen
+                            http://localhost:3000/index.hml
+    size                The size of the screen before the screenshots starts
+                            (1024x768)
+    delay               Number of seconds to <span class="pl-c1">wait</span> before the screen is started.
+                            .5
+    scale               An integer to scale the resulting screenshot
+                            1
+    es5shim             A shim <span class="pl-k">for</span> <span class="pl-smi">es5</span>
+                            see [es5-shim](https://github.com/es-shims/es5-shim)
+    format              A picture file format (png<span class="pl-k">|</span>jpeg)
+                            jpg
+                            see http://phantomjs.org/api/webpage/method/render-base64.html
+    output              A directory path where the pictures are recorded
+                            cwd + /dist
+    cookies             A JSONed array of cookies
+                            see [the code](/blob/master/stream.js#L32)
+    script              A script to interface with this pahantomjs API to screen your blocks.
+                            see [the code](/blob/master/public/screenshot.js)
+    selectorHelper      A script helper to generate css selector path. It s tightly linked to script.
+                            see [css-selector-generator](https://github.com/fczbkk/css-selector-generator/)
+    userAgent           A value to forge the user agent request header.
+    username            A value to send to validate http authentication.
+    password            A value to send to validate http authentication.</pre></div>
+
+<h2>
+<a id="credits" class="anchor" href="#credits" aria-hidden="true"><span class="octicon octicon-link"></span></a>Credits</h2>
+
+<p>Credits goes to each maintainer of module dependencies. See the <code>package.json</code>.</p>
+
+<p>Special one for <code>kevva</code> and <code>Sindre Sorhus</code> for their original work on <code>pageres</code> module.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/maboiteaspam/screenshot-stream-selected">Screenshot-stream-selected</a> is maintained by <a href="https://github.com/maboiteaspam">maboiteaspam</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
