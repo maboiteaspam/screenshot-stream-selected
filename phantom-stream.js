@@ -1,5 +1,4 @@
 'use strict';
-var fs = require('fs');
 var debug = require('debug')('screenshot-stream');
 var path = require('path');
 var urlMod = require('url');
@@ -49,18 +48,28 @@ module.exports = function (url, size, opts) {
     JSON.stringify(opts)
   ]);
 
-  var stream = cp.stdout.pipe(base64Stream.decode());
-
   process.stderr.setMaxListeners(0);
 
+  var stream = cp.stdout;
 
   cp.stdout.setEncoding('utf8');
-  byline(cp.stdout).on('data', function (data) {
+  cp.stderr.setEncoding('utf8');
+
+  stream = byline(stream);
+
+  stream.on('data', function (data) {
     data = data.trim();
-    stream.emit('data', data);
+
+    if(data.substr(0, opts.token.length)===opts.token) {
+      var msg = data.substr(opts.token.length)
+      msg = msg.split(':')
+      stream.emit(msg.shift().toLowerCase(), msg.join(':'));
+    }
+
+  }).on('end', function () {
+    debug(opts)
   });
 
-  cp.stderr.setEncoding('utf8');
   byline(cp.stderr).on('data', function (data) {
     data = data.trim();
 
@@ -68,6 +77,8 @@ module.exports = function (url, size, opts) {
       var msg = data.substr(opts.token.length)
       msg = msg.split(':')
       stream.emit(msg.shift().toLowerCase(), msg.join(':'));
+    } else {
+      stream.emit('data', data) // re emit stderr on stream (of stdout).
     }
 
   }).on('end', function () {
