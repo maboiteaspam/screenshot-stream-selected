@@ -25,7 +25,8 @@ opts.timeout  = argv.timeout  || 3;
 
 opts.cookies  = 'cookies' in argv ? JSON.parse(argv.cookies) : [];
 
-opts.script   = argv.script || path.join(__dirname, 'public', 'screenshot.js');
+opts.main           = argv.script || path.join(__dirname, 'public', 'screen.js');
+opts.script         = argv.script || path.join(__dirname, 'public', 'screenshot.js');
 opts.selectorHelper = argv.selectorHelper || path.join(__dirname, 'public', 'css-selector-generator.min.js');
 
 if (opts.format === 'jpg') {
