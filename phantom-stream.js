@@ -2,7 +2,6 @@
 var debug = require('debug')('screenshot-stream');
 var path = require('path');
 var urlMod = require('url');
-var base64Stream = require('base64-stream');
 var parseCookiePhantomjs = require('parse-cookie-phantomjs');
 var phantomBridge = require('phantom-bridge');
 var objectAssign = require('object-assign');
