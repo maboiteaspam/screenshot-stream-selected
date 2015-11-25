@@ -16,7 +16,6 @@ var screenshot = {
     for( var index=0; index < matches.length; index++ ) {
 
       matches[index].setAttribute('id', 'shoot-'+index)
-
       window.phantomSpeaker.emit('SCREENTHIS', {
         file: matches[index].getAttribute('data-shoot-file'),
         selector: cssPathGen.getSelector(matches[index])

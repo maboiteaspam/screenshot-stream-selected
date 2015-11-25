@@ -1,7 +1,7 @@
 /* global phantom,document,window,btoa */
 'use strict';
 var system = require('system');
-var Page = require('./phantom-helper').Page;
+var Page = require('phantom-event-stream/phantom-helper.js').Page;
 var opts = JSON.parse(system.args[1]);
 
 var pageHelper = new Page(phantom, opts)
@@ -20,24 +20,40 @@ var userScriptReadyToken = 'shoot-token-' + (new Date().getTime());
 // an array of css selectors to screenshot
 var selectorsToScreen = [];
 
+// listen for events sent from browser context
 pageHelper.onMessage = function (event, msg) {
-// to catch elements to screen
+// SCREENTHIS: is an event sending a css selector to screen shoot
   if(event.match(/^SCREENTHIS/)) {
     selectorsToScreen.push(
       JSON.parse(
         msg.replace(/^SCREENTHIS/, '')
       )
     )
-// to catch ready event
+// TOKEN: is an event to indicate the page is ready to be screen shot
   }else if (event.match(/^TOKEN/)
     && userScriptReadyToken===msg) {
     userScriptIsReady = true;
   }
 };
 
+
+// open the page with phantom
 pageHelper.open(opts.url, function () {
 
-  // using all collected SCREENTHIS message, screen them then quit.
+  // By now,
+  // wait for TOKEN: event to trigger the screenshots.
+  // screenshots arereceived via SCREENTHIS: event.
+  setInterval(function () {
+    if (userScriptIsReady) {
+      clearTimeout(executeScriptTimeout);
+      setTimeout(screenThemAll, opts.delay * 1000);
+    }
+  }, 20);
+
+  // using all collected selectors,
+  // clip the screen to their offset,
+  // then render the screen as base64 encoded picture.
+  // foreach screenshot, emit SAVETHIS: event, then quit.
   var screenThemAll = function () {
     selectorsToScreen.forEach(function (selector) {
       page.clipRect = page.evaluate(function (el) {
@@ -69,29 +85,16 @@ pageHelper.open(opts.url, function () {
     phantom.exit();
   };
 
-  // Insert end token into the page context
+  // Insert a token the page will use to signal it s ready to screen.
   page.evaluate(function (token) {
     window.endToken = token;
   }, userScriptReadyToken);
 
-  // Update page render with help of the user script.
-  page.includeJs(opts.selectorHelper);
-  page.includeJs(opts.script);
-
   // A timeout to prevent dead process ect
   opts.timeout = opts.timeout || 30;
+
   var executeScriptTimeout = setTimeout(function () {
     userScriptIsReady = true;
   }, opts.timeout * 1000);
-
-  // By now,
-  // wait for SCREENTHIS: message and collect them
-  // wait for TOKEN: message and trigger the screenshots
-  setInterval(function () {
-    if (userScriptIsReady) {
-      clearTimeout(executeScriptTimeout);
-      setTimeout(screenThemAll, opts.delay * 1000);
-    }
-  }, 20);
 
 });

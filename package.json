@@ -31,14 +31,11 @@
     "url"
   ],
   "dependencies": {
-    "byline": "^4.2.1",
     "debug": "^2.2.0",
     "es5-shim": "^4.0.3",
     "express": "^4.13.3",
     "minimist": "^1.2.0",
-    "object-assign": "^2.1.1",
-    "parse-cookie-phantomjs": "^1.0.0",
-    "phantom-bridge": "^1.0.0"
+    "phantom-event-stream": "maboiteaspam/phantom-event-stream"
   },
   "devDependencies": {}
 }

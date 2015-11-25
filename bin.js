@@ -8,7 +8,7 @@ var fs = require('fs');
 var debug = require('debug')('screenshot-stream');
 var path = require('path');
 var express = require('express');
-var phantomStream = require('./phantom-stream');
+var phantomStream = require('phantom-event-stream');
 
 
 var opts = {};
@@ -22,12 +22,15 @@ opts.es5shim  = argv.es5shim  || null;
 opts.format   = argv.format   || 'png';
 opts.output   = argv.output   || 'dist/';
 opts.timeout  = argv.timeout  || 3;
-
 opts.cookies  = 'cookies' in argv ? JSON.parse(argv.cookies) : [];
 
-opts.main           = argv.script || path.join(__dirname, 'public', 'screen.js');
-opts.script         = argv.script || path.join(__dirname, 'public', 'screenshot.js');
-opts.selectorHelper = argv.selectorHelper || path.join(__dirname, 'public', 'css-selector-generator.min.js');
+opts.main             = argv.main || path.join(__dirname, 'phantom-main.js');
+opts.scripts          = [];
+opts.script           = path.join(__dirname, 'playground', 'public', 'screenshot.js');
+opts.selectorHelper   = path.join(__dirname, 'playground', 'public', 'css-selector-generator.min.js');
+
+opts.scripts.push(opts.selectorHelper)
+opts.scripts.push(opts.script)
 
 if (opts.format === 'jpg') {
   opts.format = 'jpeg';
@@ -36,19 +39,10 @@ if (opts.format === 'jpg') {
 if (fs.existsSync(opts.path)===false) return console.error('public ww root path does not exists\nplease check this is a correct path ' + opts.path);
 if (fs.existsSync(opts.output)===false) fs.mkdirSync(opts.output)
 
-
-debug(opts)
-
 var app = express();
-
-if(!opts.script.match(/http:/)) app.use(express.static(path.dirname(opts.script)));
-if(!opts.selectorHelper.match(/http:/)) app.use(express.static(path.dirname(opts.selectorHelper)));
 
 app.use(express.static(opts.path));
 var server = app.listen(3000);
-
-if(!opts.script.match(/http:/)) opts.script = "/" + path.basename(opts.script);
-if(!opts.selectorHelper.match(/http:/)) opts.selectorHelper = "/" + path.basename(opts.selectorHelper);
 
 phantomStream(opts.url, opts.size, opts)
   .on('savethis', function (b){
